@@ -1,0 +1,45 @@
+name: Daily Helper Check
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Install Playwright browsers
+        run: |
+          python -m playwright install --with-deps chromium
+
+      - name: Run Netlas Search
+        env:
+          NETLAS_API_KEY: ${{ secrets.NETLAS_API_KEY }}
+        run: python get_netlas.py
+
+      - name: Run Lampa Check
+        run: python check_lampa.py
+
+      - name: Commit and Push results
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add working_online_lampa.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update lampa servers" && git push)
