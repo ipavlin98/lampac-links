@@ -5,7 +5,7 @@ import os
 
 API_KEY = os.getenv("NETLAS_API_KEY", "YOUR_NETLAS_API_KEY") 
 
-QUERY = '(http.title:"Lampa")'
+QUERY = '(http.headers.access_control_allow_headers:"X-Signalr-User-Agent" AND http.title:"Lampa")'
 
 OUTPUT_FILE = 'source.json'
 
