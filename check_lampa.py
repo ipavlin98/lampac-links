@@ -12,7 +12,7 @@ CHECK_LAMPAC_BUTTON = False
 
 TEST_QUERY = "/?card=1084242&media=movie&source=cub"
 
-CONCURRENCY = 10
+CONCURRENCY = 5
 PAGE_LOAD_TIMEOUT = 40000
 SELECTOR_TIMEOUT = 10000
 
@@ -67,11 +67,14 @@ async def check_server(context, item):
         if CHECK_LAMPAC_BUTTON:
             if has_button and not has_password:
                 print(f"✅ FOUND! {button_count} 'lampac--button' element(s) found.")
+                geo_data = data.get('geo', {})
+                country_code = geo_data.get('country') if geo_data else None
                 result_data = {
                     "base_url": base_uri,
                     "full_check_url": full_url,
                     "ip": data.get('ip'),
                     "port": data.get('port'),
+                    "country": country_code,
                     "status": "lampac_button_found"
                 }
             elif has_password:
@@ -81,11 +84,14 @@ async def check_server(context, item):
         else:
             if not has_password:
                 print(f"✅ FOUND! No password required.")
+                geo_data = data.get('geo', {})
+                country_code = geo_data.get('country') if geo_data else None
                 result_data = {
                     "base_url": base_uri,
                     "full_check_url": full_url,
                     "ip": data.get('ip'),
                     "port": data.get('port'),
+                    "country": country_code,
                     "status": "no_password"
                 }
             else:
@@ -132,11 +138,14 @@ async def main():
             
             full_url = base_uri + TEST_QUERY
             
+            geo_data = data.get('geo', {})
+            country_code = geo_data.get('country') if geo_data else None
             result_data = {
                 "base_url": base_uri,
                 "full_check_url": full_url,
                 "ip": data.get('ip'),
                 "port": data.get('port'),
+                "country": country_code,
                 "status": "not_checked"
             }
             valid_servers.append(result_data)

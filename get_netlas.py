@@ -5,11 +5,11 @@ import os
 
 API_KEY = os.getenv("NETLAS_API_KEY", "YOUR_NETLAS_API_KEY") 
 
-QUERY = '(http.headers.access_control_allow_headers:"X-Signalr-User-Agent" AND http.title:"Lampa") AND geo.continent:"Europe"'
+QUERY = '(http.headers.access_control_allow_headers:"X-Signalr-User-Agent" AND http.title:"Lampa")'
 
 OUTPUT_FILE = 'source.json'
 
-MAX_RESULTS = 200 
+MAX_RESULTS = 200
 
 def get_netlas_data():
     if not API_KEY or API_KEY == "YOUR_NETLAS_API_KEY":
