@@ -13,7 +13,7 @@ MAX_RESULTS = 200
 
 def get_netlas_data():
     if not API_KEY or API_KEY == "YOUR_NETLAS_API_KEY":
-        print("❌ ОШИБКА: Ты не вставил API Key! Укажи переменную окружения NETLAS_API_KEY или пропиши ключ в скрипте.")
+        print("❌ ОШИБКА: Ты не вставил API Key!")
         return
 
     url = "https://app.netlas.io/api/responses/"
@@ -67,7 +67,6 @@ def get_netlas_data():
 
         print("-" * 40)
         print(f"✅ Готово! Результаты ({len(final_data)} шт.) сохранены в '{OUTPUT_FILE}'.")
-        print(f"Теперь запусти check_lampa.py, он подхватит эти адреса.")
 
     except Exception as e:
         print(f"❌ Произошла ошибка: {str(e)}")
