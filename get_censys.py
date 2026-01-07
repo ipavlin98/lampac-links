@@ -18,7 +18,7 @@ def get_censys_data():
         print("❌ ОШИБКА: Ты не вставил Censys API Token!")
         return
 
-    base_url = "https://search.censys.io/api/v2/hosts/search"
+    base_url = "https://api.censys.io/v2/hosts/search"
     
     headers = {
         "Authorization": f"Bearer {CENSYS_API_TOKEN}",
